@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-theme="light">
+<head>
+    <title>Assistant - TrustLedger</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand-wrap">
+            <div class="brand">Trust<span>Ledger</span></div>
+            <div class="subtext">{{ user.business_name }}</div>
+        </div>
+        <div class="topbar-right">
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profileBtn" onclick="toggleProfileMenu()">{{ user.business_name }} ▾</button>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="/wallet">Wallet</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/settings">Settings</a>
+                    <a href="/logout">Log out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="panel">
+            <h2>Assistant</h2>
+            <div class="chat-box" id="chatBox">
+                <div class="msg bot">Hi! I can create transactions, confirm payments, mark items shipped, confirm delivery, or check a transaction's status. What do you need?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="e.g. Create a transaction for customer ada@email.com, cake, 15000">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const box = document.getElementById('chatBox');
+            const text = input.value.trim();
+            if (!text) return;
+
+            box.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+
+            const response = await fetch('/chat/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await response.json();
+
+            box.innerHTML += `<div class="msg bot">${data.reply}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html data-theme="light">
+<head>
+    <title>Transaction No. {{ "%06d"|format(t.id) }} - TrustLedger</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand-wrap">
+            <div class="brand">Trust<span>Ledger</span></div>
+            <div class="subtext">{{ user.business_name }}</div>
+        </div>
+        <div class="topbar-right">
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profileBtn" onclick="toggleProfileMenu()">{{ user.business_name }} ▾</button>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="/wallet">Wallet</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/settings">Settings</a>
+                    <a href="/logout">Log out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a href="/transactions/{{ t.id }}/invoice" style="float:right; background:var(--teal); color:white; padding:8px 16px; border-radius:8px; text-decoration:none; font-size:13px;">Download Invoice</a><a href="/dashboard" class="back-link" style="color: var(--text); display:inline-block; margin-bottom:16px;">&larr; Back to Dashboard</a>
+        <div class="stub">
+            <div class="id-stamp">No. {{ "%06d"|format(t.id) }}</div>
+            <div class="row"><span class="label">Customer</span><span>{{ t.customer_contact }}</span></div>
+            <div class="row"><span class="label">Item</span><span>{{ t.item_description }}</span></div>
+            <div class="row"><span class="label">Amount</span><span class="amount">₦{{ "{:,.2f}".format(t.amount) }}</span></div>
+            <div class="row"><span class="label">Status</span><span class="badge {{ t.overall_status }}">{{ t.overall_status }}</span>{% if t.is_overdue %} <span class="badge disputed">⚠ Overdue</span>{% endif %}</div>
+            <div class="row"><span class="label">Created</span><span>{{ t.created_at }}</span></div>
+
+            <div class="timeline"><div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--slate); margin-bottom:10px;">History</div>{% for e in events %}<div class="step done" style="font-size:13px;">{{ e.created_at.strftime("%b %d, %Y %I:%M %p") }} — {{ e.event_type.replace("_", " ")|title }}{% if e.note %} <span style="color:var(--slate);">({{ e.note }})</span>{% endif %}</div>{% endfor %}<div style="height:1px; background:var(--border); margin:12px 0;"></div>
+                <div class="step {{ 'done' if t.payment_status == 'confirmed' else 'pending' }}">
+                    {{ '✔' if t.payment_status == 'confirmed' else '○' }} Payment {{ t.payment_status }}
+                </div>
+                <div class="step {{ 'done' if t.delivery_status in ['shipped', 'delivered'] else 'pending' }}">
+                    {{ '✔' if t.delivery_status in ['shipped', 'delivered'] else '○' }} Shipped
+                </div>
+                <div class="step {{ 'done' if t.delivery_status == 'delivered' else 'pending' }}">
+                    {{ '✔' if t.delivery_status == 'delivered' else '○' }} Delivered
+                </div>
+            </div>
+
+            {% if t.payment_status != "confirmed" %}
+            <form action="/transactions/{{ t.id }}/confirm-payment" method="post">
+                <button type="submit">Confirm Payment</button>
+            </form>
+            {% elif t.delivery_status == "not_shipped" %}
+            <form action="/transactions/{{ t.id }}/mark-shipped" method="post">
+                <button type="submit">Mark Shipped</button>
+            </form>
+            {% elif t.delivery_status == "shipped" %}
+            <form action="/transactions/{{ t.id }}/confirm-delivery" method="post">
+                <button type="submit">Confirm Delivery</button>
+            </form>
+            {% else %}
+            <p><em>Transaction closed.</em></p>
+            {% endif %}
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>

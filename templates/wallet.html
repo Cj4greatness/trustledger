@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html data-theme="light">
+<head>
+    <title>Wallet - TrustLedger</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand-wrap">
+            <div class="brand">Trust<span>Ledger</span></div>
+            <div class="subtext">{{ user.business_name }}</div>
+        </div>
+        <div class="topbar-right">
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profileBtn" onclick="toggleProfileMenu()">{{ user.business_name }} ▾</button>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="/wallet">Wallet</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/settings">Settings</a>
+                    <a href="/logout">Log out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="panel">
+            <h2>Wallet</h2>
+            <table>
+                <tr>
+                    <th>Business</th>
+                    <th>Confirmed Received</th>
+                    <th># Confirmed</th>
+                    <th>Pending</th>
+                    <th># Pending</th>
+                </tr>
+                {% for w in wallets %}
+                <tr>
+                    <td>{{ w.business_name }}</td>
+                    <td class="amount" style="color: var(--success);">₦{{ "{:,.2f}".format(w.total_confirmed) }}</td>
+                    <td>{{ w.count_confirmed }}</td>
+                    <td class="amount" style="color: var(--gold);">₦{{ "{:,.2f}".format(w.total_pending) }}</td>
+                    <td>{{ w.count_pending }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <a href="/chat" class="chat-fab" title="Assistant">💬</a>
+    <script src="/static/app.js"></script>
+</body>
+</html>
