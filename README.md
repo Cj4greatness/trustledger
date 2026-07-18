@@ -85,7 +85,18 @@ See `.env.example` for the required keys:
 
 ## Screenshots
 
-_Add screenshots here — dashboard, dark mode, receipt page, invoice PDF, wallet view._
+<img width="1920" height="1080" alt="Screenshot (279)" src="https://github.com/user-attachments/assets/872031f8-8585-4b5b-abc0-0b2e5452a4d7" />
+<img width="1920" height="1080" alt="Screenshot (278)" src="https://github.com/user-attachments/assets/f3a9e789-8e1a-4850-8370-571da31dc450" />
+<img width="1920" height="1080" alt="Screenshot (277)" src="https://github.com/user-attachments/assets/67dbb790-4850-4642-8b3b-42ce95054756" />
+<img width="1920" height="1080" alt="Screenshot (276)" src="https://github.com/user-attachments/assets/c0a917ba-2173-4dcd-ac38-3891a558bd5d" />
+<img width="1920" height="1080" alt="Screenshot (275)" src="https://github.com/user-attachments/assets/6c8840ba-d54d-4fc4-a40d-7a4c76e0d856" />
+<img width="1920" height="1080" alt="Screenshot (274)" src="https://github.com/user-attachments/assets/1c358fd9-10a3-48f6-9f26-7b5565947e3d" />
+<img width="1920" height="1080" alt="Screenshot (273)" src="https://github.com/user-attachments/assets/509e4e00-0006-40e3-8c0b-2f8a13981b5b" />
+<img width="1920" height="1080" alt="Screenshot (272)" src="https://github.com/user-attachments/assets/7659adb3-1175-4d33-8609-5fab21a3b829" />
+<img width="1920" height="1080" alt="Screenshot (271)" src="https://github.com/user-attachments/assets/944fbb05-b79d-44bb-8906-23a5fb466d47" />
+<img width="1920" height="1080" alt="Screenshot (270)" src="https://github.com/user-attachments/assets/4d5d78ce-e9be-4052-8967-95eb378fbf8b" />
+<img width="1920" height="1080" alt="Screenshot (269)" src="https://github.com/user-attachments/assets/523f18d3-2509-49c6-b7a4-4a3aa663a154" />
+
 
 ## Author
 
